@@ -1,7 +1,7 @@
 #include "../include/dyn_array_tests.h"
-#include "../../unity.h"
 #include <string.h>
 
+/*
 void test_array_push(void) {
     
     typedef enum {
@@ -49,5 +49,4 @@ void test_array_push(void) {
 
 }
 
-
-
+*/

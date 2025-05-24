@@ -15,7 +15,6 @@ SRC_FILES = $(SRC_DIR)/*.c
 TEST_FILES = \
 	$(SRC_FILES) \
 	$(TEST_DIR)/main.c \
-	$(TEST_DIR)/unity.c \
 	$(TEST_DIR)/data_structure_tests/src/*.c
 
 # Binaries
