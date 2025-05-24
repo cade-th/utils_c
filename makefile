@@ -1,6 +1,7 @@
 CC = clang
 CFLAGS = -std=c99
 # -Wall -Wextra
+LDFLAGS = 
 
 # Directories
 SRC_DIR = src
@@ -27,7 +28,7 @@ all: $(APP_BIN)
 # App build
 $(APP_BIN): $(SRC_FILES)
 	@mkdir -p $(BUILD_DIR)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Test build + run
 test: $(TEST_BIN)
@@ -35,7 +36,7 @@ test: $(TEST_BIN)
 
 $(TEST_BIN): $(TEST_FILES)
 	@mkdir -p $(BUILD_DIR)
-	$(CC) $(CFLAGS) -I$(TEST_DIR) -o $@ $^
+	$(CC) $(CFLAGS) -I$(TEST_DIR) -o $@ $^ $(LDFLAGS)
 
 # Clean build artifacts
 clean:
