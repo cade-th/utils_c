@@ -18,6 +18,6 @@ void test_result(void) {
     if (r.is_ok) {
         printf("Test worked!\n");
     } else {
-        printf("%s\n", r.inner.err);    
+        printf("%s\n", UNWRAP_ERR(r));    
     }
 }
