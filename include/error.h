@@ -10,18 +10,18 @@
 	} inner;     \
     }
 
-#define error(enumerator)  \
-    typedef struct {	\
+#define error(enumerator)	\
+    typedef struct {		\
 	enumerator type;	\
-	bool ok;	\
+	bool ok;		\
 	void *data;		\
-    } error
+    }
 
-#define ERROR_RETURN(E,T,S)   \
+#define THROW(E,T,D)		\
     E.data = malloc(sizeof(T)); \
-    *(T *)E.data = S; return E;
+    *(T *)E.data = D; return E;
 
-#define UNWRAP(T,E) \
+#define CATCH(T,E)		\
     *(T *)E.data
 
 

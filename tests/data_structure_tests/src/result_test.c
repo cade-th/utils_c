@@ -2,52 +2,51 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-error get_val(int input) {
-    error function_error;
+getnum_error get_val(int input) {
+    getnum_error error;
     int truth = 0;
 
     if (input == truth) {
-        function_error.ok = 1; 
-        ERROR_RETURN(function_error,int,0);
-
+        error.ok = 1; 
+        THROW(error,int,0);
     }
     else {
         if (input == 1) {
-            function_error.type = error_1;
-            ERROR_RETURN(function_error,int,1);
+            error.type = error_1;
+            THROW(error,int,1);
         }
         if (input == 2) {
-            function_error.type = error_2;
-            ERROR_RETURN(function_error,int,2);
+            error.type = error_2;
+            THROW(error,char,'?');
         }
         if (input == 3) {
-            function_error.type = error_3;
-            ERROR_RETURN(function_error,int,3);
+            error.type = error_3;
+            THROW(error,int,3);
         }
     }
-    function_error.type = error_4;
-    ERROR_RETURN(function_error,int,4);
+    error.type = error_4;
+    THROW(error,int,4);
 }
 
 void test_result(void) {
-    error test_error = get_val(5);    
+    getnum_error error = get_val(2);    
 
-    if(test_error.ok) {
-        printf("Test Success: value %d\n", UNWRAP(int,test_error));
+    if(error.ok) {
+        printf("Test Success: value %d\n", CATCH(int,error));
     }
     else {
         printf("Test Failed:\n");
-        switch (test_error.type) {
+        switch (error.type) {
             case error_1 :
-                printf("Error 1 with value %d\n", UNWRAP(int,test_error));
+                printf("getnum_error_t 1 with value %d\n", CATCH(int,error));
                 break;
             case error_2 :
-                printf("Error 2 with value %d\n", UNWRAP(int,test_error));
+                printf("getnum_error_t 2 with value %c\n", CATCH(char,error));
                 break;
             case error_3 :
-                printf("Error 3 with value %d\n", UNWRAP(int,test_error));
+                printf("getnum_error_t 3 with value %d\n", CATCH(int,error));
             case error_4 :
-                printf("Error 4 with value %d\n", UNWRAP(int,test_error));
+                printf("getnum_error_t 4 with value %d\n", CATCH(int,error));
         };
     }
 }
