@@ -10,7 +10,7 @@
 	} inner;     \
     }
 
-#define error(enumerator)	\
+#define ERROR(enumerator)	\
     typedef struct {		\
 	enumerator type;	\
 	bool ok;		\

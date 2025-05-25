@@ -7,6 +7,6 @@ typedef enum {
 	error_3,
 	error_4,
 } getnum_error_t;
-error(getnum_error_t) getnum_error;
+ERROR(getnum_error_t) getnum_error;
 
 void test_result(void);
