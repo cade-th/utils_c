@@ -7,13 +7,26 @@
 	union {      \
 	    T val;   \
 	    E err;   \
-	} inner;           \
+	} inner;     \
     }
 
-#define UNWRAP(RESULT_VAL) RESULT_VAL.inner.val
+#define error(enumerator)  \
+    typedef struct {	\
+	enumerator type;	\
+	bool ok;	\
+	void *data;		\
+    } error
+
+#define ERROR_RETURN(E,T,S)   \
+    E.data = malloc(sizeof(T)); \
+    *(T *)E.data = S; return E;
+
+#define UNWRAP(T,E) \
+    *(T *)E.data
+
 
 #define UNWRAP_ERR(RESULT_VAL) RESULT_VAL.inner.err
 
 #define OK(VALUE) { .is_ok = 1, .inner.val = VALUE}
 
-#define ERR(VALUE) { .is_ok = 0, .inner.err = VALUE}
+#define ERR(T, VALUE) { .is_ok = 0, .inner.err = TYPE, .inner.val = VALUE}
