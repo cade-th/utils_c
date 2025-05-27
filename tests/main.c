@@ -1,7 +1,7 @@
-#include "data_structure_tests/include/result_test.h"
+#include "data_structure_tests/include/example_module_test.h"
 
 int main(void) {
-    test_result();            
+    test_Error_1();    
     return 0;
 }
 
