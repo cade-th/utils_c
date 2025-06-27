@@ -1,7 +1,7 @@
-#include "data_structure_tests/include/example_module_test.h"
+#include "../src/map.h"
 
 int main(void) {
-    test_Error_1();    
+    run_map_tests();
     return 0;
 }
 

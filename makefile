@@ -1,47 +1,45 @@
 CC = clang
-CFLAGS = -std=c99
-# -Wall -Wextra
+CFLAGS = -std=c99 -g -Wall -Wextra
 LDFLAGS = 
 
-# Directories
 SRC_DIR = src
-TEST_DIR = tests
 BUILD_DIR = build
+LIB_DIR = lib
+TEST_DIR = tests
 
-# Files
-#	$(SRC_DIR)/main.c 
-SRC_FILES = $(SRC_DIR)/*.c 
+# All source files, recursively
+SRC_FILES = \
+	$(wildcard $(SRC_DIR)/*.c) \
+	$(wildcard $(SRC_DIR)/**/*.c) \
+	$(wildcard $(SRC_DIR)/**/**/*.c) \
+	$(wildcard $(SRC_DIR)/**/**/**/*.c)
 
-TEST_FILES = \
-	$(SRC_FILES) \
-	$(TEST_DIR)/main.c \
-	$(TEST_DIR)/data_structure_tests/src/*.c
+# Filter out the regular main
+SRC_NO_MAIN = $(filter-out $(SRC_DIR)/main.c, $(SRC_FILES))
 
-# Binaries
+LIB_FILES = $(wildcard $(LIB_DIR)/utils_c/src/*.c)
+
 APP_BIN = $(BUILD_DIR)/app
-TEST_BIN = $(BUILD_DIR)/tests
+TEST_BIN = $(BUILD_DIR)/test
 
-# Default target
 all: $(APP_BIN)
 
-# App build
-$(APP_BIN): $(SRC_FILES)
+$(APP_BIN): $(SRC_FILES) $(LIB_FILES)
+	@mkdir -p $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+run:
+	@cd $(BUILD_DIR) && ./app
+
+
+test: $(TEST_BIN)
+	@cd $(BUILD_DIR) && ./test
+
+$(TEST_BIN): $(SRC_NO_MAIN) $(LIB_FILES) $(TEST_DIR)/main.c $(wildcard $(TEST_DIR)/*.c)
 	@mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-# Test build + run
-test: $(TEST_BIN)
-	@./$(TEST_BIN)
-
-$(TEST_BIN): $(TEST_FILES)
-	@mkdir -p $(BUILD_DIR)
-	$(CC) $(CFLAGS) -I$(TEST_DIR) -o $@ $^ $(LDFLAGS)
-
-# Clean build artifacts
 clean:
 	rm -rf $(BUILD_DIR)
 
-.PHONY: all test clean
-	$(SRC_DIR)/error/error.c \
+.PHONY: all clean run test
 
-PHONY: all test clean
